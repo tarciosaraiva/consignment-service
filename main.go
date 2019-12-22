@@ -1,4 +1,4 @@
-package main
+package consignmentservice
 
 import (
 	"log"
@@ -8,8 +8,6 @@ import (
 	"google.golang.org/grpc/reflection"
 
 	pb "github.com/tarciosaraiva/consignment-service/proto/consignment"
-	rp "github.com/tarciosaraiva/consignment-service/data/repository"
-	svc "github.com/tarciosaraiva/consignment-service/data/service"
 )
 
 const (
@@ -18,7 +16,7 @@ const (
 
 func main() {
 
-	repo := &rp.Repository{}
+	repo := &Repository{}
 
 	// Set-up our gRPC server.
 	lis, err := net.Listen("tcp", port)
@@ -30,7 +28,7 @@ func main() {
 	// Register our service with the gRPC server, this will tie our
 	// implementation into the auto-generated interface code for our
 	// protobuf definition.
-	pb.RegisterShippingServiceServer(s, &svc.service{repo})
+	pb.RegisterShippingServiceServer(s, &service{repo})
 
 	// Register reflection service on gRPC server.
 	reflection.Register(s)

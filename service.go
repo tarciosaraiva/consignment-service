@@ -1,9 +1,9 @@
-package data
+package consignmentservice
 
 import (
 	"context"
 
-    pb "github.com/tarciosaraiva/consignment-service/proto/consignment"
+	pb "github.com/tarciosaraiva/consignment-service/proto/consignment"
 )
 
 // Service should implement all of the methods to satisfy the service
@@ -13,7 +13,6 @@ import (
 type service struct {
 	repo repository
 }
-
 
 // CreateConsignment - we created just one method on our service,
 // which is a create method, which takes a context and a request as an
