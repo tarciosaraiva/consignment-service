@@ -1,7 +1,6 @@
 package main
 
 import (
-	"context"
 	"log"
 	"net"
 
@@ -9,7 +8,8 @@ import (
 	"google.golang.org/grpc/reflection"
 
 	pb "github.com/tarciosaraiva/consignment-service/proto/consignment"
-	svc "github.com/tarciosaraiva/consignment-service/data"
+	rp "github.com/tarciosaraiva/consignment-service/data/repository"
+	svc "github.com/tarciosaraiva/consignment-service/data/service"
 )
 
 const (
@@ -18,7 +18,7 @@ const (
 
 func main() {
 
-	repo := &svc.Repository{}
+	repo := &rp.Repository{}
 
 	// Set-up our gRPC server.
 	lis, err := net.Listen("tcp", port)
