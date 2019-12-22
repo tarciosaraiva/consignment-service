@@ -1,4 +1,4 @@
-package consignmentservice
+package main
 
 import (
 	"sync"
