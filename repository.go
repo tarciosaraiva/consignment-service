@@ -8,6 +8,7 @@ import (
 
 type repository interface {
 	Create(*pb.Consignment) (*pb.Consignment, error)
+	GetAll() []*pb.Consignment
 }
 
 // Repository - Dummy repository, this simulates the use of a datastore
@@ -24,4 +25,9 @@ func (repo *Repository) Create(consignment *pb.Consignment) (*pb.Consignment, er
 	repo.consignments = updated
 	repo.mu.Unlock()
 	return consignment, nil
+}
+
+// GetAll consignments
+func (repo *Repository) GetAll() []*pb.Consignment {
+	return repo.consignments
 }
