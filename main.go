@@ -1,40 +1,32 @@
 package main
 
 import (
-	"log"
-	"net"
+	"fmt"
+	"strings"
 
-	"google.golang.org/grpc"
-	"google.golang.org/grpc/reflection"
-
+	"github.com/micro/go-micro"
 	pb "github.com/tarciosaraiva/consignment-service/proto/consignment"
 )
 
 const (
-	port = ":50051"
+	host = "localhost"
+	port = "50051"
 )
 
 func main() {
 
 	repo := &Repository{}
 
-	// Set-up our gRPC server.
-	lis, err := net.Listen("tcp", port)
-	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
-	}
-	s := grpc.NewServer()
+	srv := micro.NewService(
+		micro.Address(strings.Join([]string{host, port}, ":")),
+		micro.Name("service.consignment"),
+	)
 
-	// Register our service with the gRPC server, this will tie our
-	// implementation into the auto-generated interface code for our
-	// protobuf definition.
-	pb.RegisterShippingServiceServer(s, &service{repo})
+	srv.Init()
 
-	// Register reflection service on gRPC server.
-	reflection.Register(s)
+	pb.RegisterShippingServiceHandler(srv.Server(), &service{repo})
 
-	log.Println("Running on port:", port)
-	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+	if err := srv.Run(); err != nil {
+		fmt.Println(err)
 	}
 }
