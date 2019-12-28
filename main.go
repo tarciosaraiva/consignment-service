@@ -2,15 +2,9 @@ package main
 
 import (
 	"fmt"
-	"strings"
 
 	"github.com/micro/go-micro"
 	pb "github.com/tarciosaraiva/consignment-service/proto/consignment"
-)
-
-const (
-	host = "localhost"
-	port = "50051"
 )
 
 func main() {
@@ -18,7 +12,6 @@ func main() {
 	repo := &Repository{}
 
 	srv := micro.NewService(
-		micro.Address(strings.Join([]string{host, port}, ":")),
 		micro.Name("service.consignment"),
 	)
 
