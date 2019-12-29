@@ -5,6 +5,7 @@ import (
 
 	"github.com/micro/go-micro"
 	pb "github.com/tarciosaraiva/consignment-service/proto/consignment"
+	vp "github.com/tarciosaraiva/vessel-service/proto/vessel"
 )
 
 func main() {
@@ -17,7 +18,9 @@ func main() {
 
 	srv.Init()
 
-	pb.RegisterShippingServiceHandler(srv.Server(), &service{repo})
+	vc := vp.NewVesselService("vessel.service", srv.Client())
+
+	pb.RegisterShippingServiceHandler(srv.Server(), &service{repo, vc})
 
 	if err := srv.Run(); err != nil {
 		fmt.Println(err)
